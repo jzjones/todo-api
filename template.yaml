@@ -36,7 +36,11 @@ Resources:
   TodoTable: !include templates/todo-table.yaml
   AppSyncApi: !include templates/appsync-api.yaml
   AppSyncSchema: !include templates/appsync-schema.yaml
-  AppSyncTodoTableSource: !include templates/appsync-todo-table-source.yaml
+  AppSyncTodoTableDataSource: !include templates/appsync-todo-table-source.yaml
+  AppSyncAllTodosQueryResolver: !include templates/resolvers/all-todos.yaml
+  AppSyncDeleteTodoQueryResolver: !include templates/resolvers/delete-todo.yaml
+  AppSyncGetTodoQueryResolver: !include templates/resolvers/get-todo.yaml
+  AppSyncSaveTodoQueryResolver: !include templates/resolvers/save-todo.yaml
   DynamoDBRole:
     Type: AWS::IAM::Role
     Properties:

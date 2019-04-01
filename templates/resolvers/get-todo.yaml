@@ -1,0 +1,17 @@
+Type: "AWS::AppSync::Resolver"
+DependsOn: AppSyncSchema
+Properties:
+  ApiId: !GetAtt AppSyncApi.ApiId
+  TypeName: Query
+  FieldName: getTodo
+  DataSourceName: !GetAtt AppSyncTodoTableDataSource.Name
+  RequestMappingTemplate: |
+    {
+      "version": "2012-02-28",
+      "operation": "GetItem",
+      "key": {
+        "TodoId": $util.dynamodb.toDynamoDBJson($ctx.args.TodoId),
+        "UserId": $util.dynamodb.toDynamoDBJson($ctx.identity.sub)
+      }
+    }
+  ResponseMappingTemplate: "$util.toJson($ctx.result)"
