@@ -1,0 +1,7 @@
+Type: AWS::Cognito::UserPoolClient
+Properties:
+  ClientName:
+    Fn::Sub: ${AWS::StackName}-user-pool-client
+  GenerateSecret: false
+  UserPoolId:
+    Ref: UserPool

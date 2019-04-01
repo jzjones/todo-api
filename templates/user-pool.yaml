@@ -1,0 +1,11 @@
+Type: AWS::Cognito::UserPool
+Properties:
+  UserPoolName:
+    Fn::Sub: ${AWS::StackName}-user-pool
+  AutoVerifiedAttributes:
+    - email
+  Schema:
+    - Name: email
+      AttributeDataType: String
+      Mutable: false
+      Required: true

@@ -1,0 +1,10 @@
+Type: "AWS::AppSync::GraphQLApi"
+Properties:
+  AuthenticationType: "AMAZON_COGNITO_USER_POOLS"
+  Name: !Sub ${AWS::StackName}-api
+  UserPoolConfig:
+    UserPoolId: 
+      Ref: UserPoolClient
+    AwsRegion: 
+      Fn::Sub: ${AWS::Region}
+    DefaultAction: "ALLOW"

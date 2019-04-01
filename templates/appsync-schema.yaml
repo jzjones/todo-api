@@ -1,0 +1,25 @@
+Type: "AWS::AppSync::GraphQLSchema"
+Properties:
+  ApiId: 
+    Fn::GetAtt: AppSyncApi.ApiId
+  Definition: |
+    type Todo {
+      TodoId: ID!
+      title: String
+    }
+    type PaginatedTodos {
+      todos: [Todo!]!
+      nextToken: String
+    }
+    type Query {
+      allTodos(limit: Int, nextToken: String): PaginatedTodos!
+      getTodo(TodoId: ID!): Todo
+    }
+    type Mutation {
+      saveTodo(TodoId: ID!, title: String!): Todo
+      deleteTodo(TodoId: ID!): Todo
+    }
+    type Schema {
+      query: Query
+      mutation: Mutation
+    }

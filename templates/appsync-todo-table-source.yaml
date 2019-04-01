@@ -1,0 +1,13 @@
+Type: "AWS::AppSync::DataSource"
+Properties:
+  ApiId: 
+    Fn::GetAtt: AppSyncApi.ApiId
+  Name: TodoTableSource
+  Type: AMAZON_DYNAMODB
+  ServiceRoleArn:
+    Fn::GetAtt: DynamoDBRole.Arn
+  DynamoDBConfig:
+    TableName:
+      Ref: TodoTable
+    AwsRegion:
+      Fn::Sub: ${AWS::Region}
