@@ -5,32 +5,48 @@ Description: >
 
   Sample SAM Template for todo-api
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 3
 
-Parameters:
-  DeploymentBucket:
-    Type: String
-    Default: todo-deployment-bucket
-
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  IdentityPool: 
+    Type: AWS::Cognito::IdentityPool
     Properties:
-      CodeUri: hello-world/
-      Handler: app.lambdaHandler
-      Runtime: nodejs8.10
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
-        Variables:
-          PARAM1: VALUE
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /hello
-            Method: get
+      AllowUnauthenticatedIdentities: True
+  IdentityPoolAuthenticatedRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+  IdentityPoolRoleAttachment:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId: !Ref IdentityPool
+      Roles:
+        authenticated: !GetAtt IdentityPoolAuthenticatedRole.Arn
+        unauthenticated: !GetAtt IdentityPoolUnauthenticatedRole.Arn
+  IdentityPoolUnauthenticatedRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
   UserPool: !include templates/user-pool.yaml
   UserPoolClient: !include templates/user-pool-client.yaml
   TodoTable: !include templates/todo-table.yaml
@@ -77,19 +93,3 @@ Resources:
               - dynamodb:BatchWriteItem
             Resource:
               Fn::Join: [ "", [ !GetAtt TodoTable.Arn, "*" ] ]
-
-Outputs:
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value:
-      Fn::Sub: "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value:
-      Fn::GetAtt: HelloWorldFunction.Arn
-
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: 
-      Fn::GetAtt: HelloWorldFunctionRole.Arn

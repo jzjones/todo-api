@@ -9,3 +9,5 @@ Properties:
       AttributeDataType: String
       Mutable: false
       Required: true
+  UsernameAttributes:
+    - email
