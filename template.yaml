@@ -10,43 +10,6 @@ Globals:
     Timeout: 3
 
 Resources:
-  IdentityPool: 
-    Type: AWS::Cognito::IdentityPool
-    Properties:
-      AllowUnauthenticatedIdentities: True
-  IdentityPoolAuthenticatedRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Principal:
-            Service:
-            - ec2.amazonaws.com
-          Action:
-          - sts:AssumeRole
-      Path: "/"
-  IdentityPoolRoleAttachment:
-    Type: AWS::Cognito::IdentityPoolRoleAttachment
-    Properties:
-      IdentityPoolId: !Ref IdentityPool
-      Roles:
-        authenticated: !GetAtt IdentityPoolAuthenticatedRole.Arn
-        unauthenticated: !GetAtt IdentityPoolUnauthenticatedRole.Arn
-  IdentityPoolUnauthenticatedRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Principal:
-            Service:
-            - ec2.amazonaws.com
-          Action:
-          - sts:AssumeRole
-      Path: "/"
   UserPool: !include templates/user-pool.yaml
   UserPoolClient: !include templates/user-pool-client.yaml
   TodoTable: !include templates/todo-table.yaml
@@ -57,6 +20,10 @@ Resources:
   AppSyncDeleteTodoQueryResolver: !include templates/resolvers/delete-todo.yaml
   AppSyncGetTodoQueryResolver: !include templates/resolvers/get-todo.yaml
   AppSyncSaveTodoQueryResolver: !include templates/resolvers/save-todo.yaml
+  IdentityPool: !include templates/identity-pool.yaml
+  IdentityPoolAuthenticatedRole: !include templates/identity-pool-authenticated-role.yaml
+  IdentityPoolRoleAttachment: !include templates/identity-pool-role-attachment.yaml
+  IdentityPoolUnauthenticatedRole: !include templates/identity-pool-unauthenticated-role.yaml
   DynamoDBRole:
     Type: AWS::IAM::Role
     Properties:
