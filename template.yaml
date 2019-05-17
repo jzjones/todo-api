@@ -5,27 +5,11 @@ Description: >
 
   Sample SAM Template for todo-api
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 3
 
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: hello-world/
-      Handler: app.lambdaHandler
-      Runtime: nodejs8.10
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
-        Variables:
-          PARAM1: VALUE
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /hello
-            Method: get
   UserPool: !include templates/user-pool.yaml
   UserPoolClient: !include templates/user-pool-client.yaml
   TodoTable: !include templates/todo-table.yaml
@@ -36,6 +20,10 @@ Resources:
   AppSyncDeleteTodoQueryResolver: !include templates/resolvers/delete-todo.yaml
   AppSyncGetTodoQueryResolver: !include templates/resolvers/get-todo.yaml
   AppSyncSaveTodoQueryResolver: !include templates/resolvers/save-todo.yaml
+  IdentityPool: !include templates/identity-pool.yaml
+  IdentityPoolAuthenticatedRole: !include templates/identity-pool-authenticated-role.yaml
+  IdentityPoolRoleAttachment: !include templates/identity-pool-role-attachment.yaml
+  IdentityPoolUnauthenticatedRole: !include templates/identity-pool-unauthenticated-role.yaml
   DynamoDBRole:
     Type: AWS::IAM::Role
     Properties:
@@ -74,25 +62,9 @@ Resources:
               Fn::Join: [ "", [ !GetAtt TodoTable.Arn, "*" ] ]
 
 Outputs:
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value:
-      Fn::Sub: "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value:
-      Fn::GetAtt: HelloWorldFunction.Arn
-
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: 
-      Fn::GetAtt: HelloWorldFunctionRole.Arn
-
   UserPool:
     Description: "UserPool ID"
     Value: !Ref UserPool
-
   UserPoolClient:
     Description: "UserPoolClient ID"
     Value: !Ref UserPoolClient

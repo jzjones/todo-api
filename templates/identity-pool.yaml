@@ -1,0 +1,6 @@
+Type: AWS::Cognito::IdentityPool
+Properties:
+  AllowUnauthenticatedIdentities: True
+  CognitoIdentityProviders:
+  - ClientId: !Ref UserPoolClient
+    ProviderName: !GetAtt UserPool.ProviderName
