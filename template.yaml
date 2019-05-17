@@ -10,11 +10,6 @@ Globals:
   Function:
     Timeout: 3
 
-Parameters:
-  DeploymentBucket:
-    Type: String
-    Default: todo-deployment-bucket
-
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -93,3 +88,11 @@ Outputs:
     Description: "Implicit IAM Role created for Hello World function"
     Value: 
       Fn::GetAtt: HelloWorldFunctionRole.Arn
+
+  UserPool:
+    Description: "UserPool ID"
+    Value: !Ref UserPool
+
+  UserPoolClient:
+    Description: "UserPoolClient ID"
+    Value: !Ref UserPoolClient
