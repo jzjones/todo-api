@@ -12,6 +12,16 @@ Properties:
   ProvisionedThroughput:
     ReadCapacityUnits: 5
     WriteCapacityUnits: 5
+  GlobalSecondaryIndexes:
+  - IndexName: UserId-index
+    KeySchema:
+    - AttributeName: UserId
+      KeyType: HASH
+    Projection:
+      ProjectionType: ALL
+    ProvisionedThroughput:
+      ReadCapacityUnits: 5
+      WriteCapacityUnits: 5
   TableName:
     Fn::Sub: ${AWS::StackName}-todo-table
 Type: AWS::DynamoDB::Table

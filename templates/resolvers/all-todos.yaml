@@ -14,7 +14,8 @@ Properties:
         "expressionValues": {
           ":id": $util.dynamodb.toDynamoDBJson($ctx.identity.sub)
         }
-      }
+      },
+      "index": "UserId-index"
     },
     "limit": $util.defaultIfNull(${ctx.args.limit}, 20),
     "nextToken": $util.toJson(${ctx.args.nextToken})
