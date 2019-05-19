@@ -60,3 +60,11 @@ Resources:
               - dynamodb:BatchWriteItem
             Resource:
               Fn::Join: [ "", [ !GetAtt TodoTable.Arn, "*" ] ]
+
+Outputs:
+  UserPool:
+    Description: "UserPool ID"
+    Value: !Ref UserPool
+  UserPoolClient:
+    Description: "UserPoolClient ID"
+    Value: !Ref UserPoolClient

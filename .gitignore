@@ -128,8 +128,7 @@ $RECYCLE.BIN/
 # Build files
 .merge-template.yaml
 .aws-sam/**
-packaged.yaml*
-
-
+packaged.yaml
+.env*
 
 # End of https://www.gitignore.io/api/osx,node,linux,windows

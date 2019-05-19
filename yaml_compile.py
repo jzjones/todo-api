@@ -38,4 +38,4 @@ Loader.add_constructor('!Join', expand_function)
 with open('template.yaml', 'r') as f:
   data = yaml.load(f, Loader)
   stream = file(merge_template, 'w')
-  yaml.safe_dump(data, stream) 
+  yaml.safe_dump(data, stream)
