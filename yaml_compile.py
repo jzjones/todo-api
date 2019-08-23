@@ -20,20 +20,24 @@ class Loader(yaml.SafeLoader):
       data = yaml.load(f, Loader)
       return data
 
+  def expand_function(self, node):
+    output = {'Fn::' + node.tag[1:]: node.value}
+    return output
+  
+  def expand_helper(self, node):
+    output = {node.tag[1:]: node.value}
+    return output
+
+  def function_path(self, node):
+    output = "./dist/" + node.value
+    return output
+
 Loader.add_constructor('!include', Loader.include)
-
-def expand_function(self, node):
-  output = {'Fn::' + node.tag[1:]: node.value}
-  return output
-
-def expand_helper(self, node):
-  output = {node.tag[1:]: node.value}
-  return output
-
-Loader.add_constructor('!Sub', expand_function)
-Loader.add_constructor('!GetAtt', expand_function)
-Loader.add_constructor('!Ref', expand_helper)
-Loader.add_constructor('!Join', expand_function)
+Loader.add_constructor('!Sub', Loader.expand_function)
+Loader.add_constructor('!GetAtt', Loader.expand_function)
+Loader.add_constructor('!Ref', Loader.expand_helper)
+Loader.add_constructor('!Join', Loader.expand_function)
+Loader.add_constructor('!function', Loader.function_path)
 
 with open('template.yaml', 'r') as f:
   data = yaml.load(f, Loader)

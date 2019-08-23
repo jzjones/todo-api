@@ -21,8 +21,14 @@ then
   ENV_VARS=--parameter-overrides $(cat $ENV_FILE)
 fi
 
-
+webpack
 sam build --use-container --template .merge-template.yaml
+
+ret=$?
+if [ $ret -ne 0 ]; then
+  echo "SAM build faled"
+  exit
+fi
 
 sam package --output-template-file packaged.yaml --s3-bucket $DEPLOYMENT_BUCKET
 sam deploy --template-file packaged.yaml --stack-name $STACK_NAME --capabilities CAPABILITY_NAMED_IAM $ENV_VARS

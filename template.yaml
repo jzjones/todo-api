@@ -10,6 +10,8 @@ Globals:
     Timeout: 3
 
 Resources:
+  AutoConfirmUserFunction: !include templates/functions/auto-confirm-user.yaml
+  AutoConfirmUserPermission: !include templates/auto-confirm-user-permission.yaml
   UserPool: !include templates/user-pool.yaml
   UserPoolClient: !include templates/user-pool-client.yaml
   TodoTable: !include templates/todo-table.yaml

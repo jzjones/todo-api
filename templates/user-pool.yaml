@@ -11,3 +11,5 @@ Properties:
       Required: true
   UsernameAttributes:
     - email
+  LambdaConfig:
+    PreSignUp: !GetAtt AutoConfirmUserFunction.Arn

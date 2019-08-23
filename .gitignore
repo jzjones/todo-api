@@ -130,5 +130,6 @@ $RECYCLE.BIN/
 .aws-sam/**
 packaged.yaml*
 .env*
+dist/
 
 # End of https://www.gitignore.io/api/osx,node,linux,windows

@@ -1,0 +1,5 @@
+Type: AWS::Serverless::Function
+Properties:
+  CodeUri: !function auto-confirm-user
+  Handler: index.default
+  Runtime: nodejs10.x
