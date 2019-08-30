@@ -21,7 +21,7 @@ then
   ENV_VARS=--parameter-overrides $(cat $ENV_FILE)
 fi
 
-webpack
+node_modules/.bin/webpack
 sam build --use-container --template .merge-template.yaml
 
 ret=$?
