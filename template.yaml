@@ -19,9 +19,10 @@ Resources:
   AppSyncSchema: !include templates/appsync-schema.yaml
   AppSyncTodoTableDataSource: !include templates/appsync-todo-table-source.yaml
   AppSyncAllTodosQueryResolver: !include templates/resolvers/all-todos.yaml
-  AppSyncDeleteTodoQueryResolver: !include templates/resolvers/delete-todo.yaml
+  AppSyncDeleteTodoMutationResolver: !include templates/resolvers/delete-todo.yaml
   AppSyncGetTodoQueryResolver: !include templates/resolvers/get-todo.yaml
-  AppSyncSaveTodoQueryResolver: !include templates/resolvers/save-todo.yaml
+  AppSyncUpdateTodoMutationResolver: !include templates/resolvers/update-todo.yaml
+  AppSyncCreateTodoMutationResolver: !include templates/resolvers/create-todo.yaml
   IdentityPool: !include templates/identity-pool.yaml
   IdentityPoolAuthenticatedRole: !include templates/identity-pool-authenticated-role.yaml
   IdentityPoolRoleAttachment: !include templates/identity-pool-role-attachment.yaml

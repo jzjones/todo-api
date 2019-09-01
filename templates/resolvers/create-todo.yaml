@@ -3,15 +3,19 @@ DependsOn: AppSyncSchema
 Properties:
   ApiId: !GetAtt AppSyncApi.ApiId
   TypeName: Mutation
-  FieldName: deleteTodo
+  FieldName: createTodo
   DataSourceName: !GetAtt AppSyncTodoTableDataSource.Name
   RequestMappingTemplate: |
     {
       "version": "2017-02-28",
-      "operation": "DeleteItem",
+      "operation": "PutItem",
       "key": {
-        "TodoId": $util.dynamodb.toDynamoDBJson($ctx.args.TodoId),
+        "TodoId": $util.dynamodb.toDynamoDBJson($util.autoId()),
         "UserId": $util.dynamodb.toDynamoDBJson($ctx.identity.sub)
+      },
+      "attributeValues": {
+        "title": $util.dynamodb.toDynamoDBJson($ctx.args.title),
+        "content": $util.dynamodb.toDynamoDBJson($ctx.args.content)
       }
     }
   ResponseMappingTemplate: "$util.toJson($ctx.result)"

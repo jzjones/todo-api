@@ -3,11 +3,11 @@ DependsOn: AppSyncSchema
 Properties:
   ApiId: !GetAtt AppSyncApi.ApiId
   TypeName: Mutation
-  FieldName: saveTodo
+  FieldName: updateTodo
   DataSourceName: !GetAtt AppSyncTodoTableDataSource.Name
   RequestMappingTemplate: |
     {
-      "version": "2012-02-28",
+      "version": "2017-02-28",
       "operation": "PutItem",
       "key": {
         "TodoId": $util.dynamodb.toDynamoDBJson($ctx.args.TodoId),

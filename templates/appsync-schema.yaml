@@ -16,7 +16,8 @@ Properties:
       getTodo(TodoId: ID!): Todo
     }
     type Mutation {
-      saveTodo(TodoId: ID!, title: String!): Todo
+      createTodo(title: String!): Todo
+      updateTodo(TodoId: ID!, title: String!): Todo
       deleteTodo(TodoId: ID!): Todo
     }
     type Schema {
