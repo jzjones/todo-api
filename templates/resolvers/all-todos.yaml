@@ -10,12 +10,12 @@ Properties:
       "version": "2017-02-28",
       "operation": "Query",
       "query": {
-        "expression": "UserId = :id",
+        "expression": "userId = :userId",
         "expressionValues": {
-          ":id": $util.dynamodb.toDynamoDBJson($ctx.identity.sub)
+          ":userId": $util.dynamodb.toDynamoDBJson($ctx.identity.sub)
         }
       },
-      "index": "UserId-index"
+      "index": "userId-index"
     },
     "limit": $util.defaultIfNull(${ctx.args.limit}, 20),
     "nextToken": $util.toJson(${ctx.args.nextToken})

@@ -10,8 +10,8 @@ Properties:
       "version": "2017-02-28",
       "operation": "GetItem",
       "key": {
-        "TodoId": $util.dynamodb.toDynamoDBJson($ctx.args.TodoId),
-        "UserId": $util.dynamodb.toDynamoDBJson($ctx.identity.sub)
+        "id": $util.dynamodb.toDynamoDBJson($ctx.args.id),
+        "userId": $util.dynamodb.toDynamoDBJson($ctx.identity.sub)
       }
     }
   ResponseMappingTemplate: "$util.toJson($ctx.result)"

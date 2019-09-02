@@ -1,21 +1,21 @@
 Properties:
   AttributeDefinitions:
-  - AttributeName: TodoId
+  - AttributeName: id
     AttributeType: S
-  - AttributeName: UserId
+  - AttributeName: userId
     AttributeType: S
   KeySchema:
-  - AttributeName: TodoId
+  - AttributeName: id
     KeyType: HASH
-  - AttributeName: UserId
+  - AttributeName: userId
     KeyType: RANGE
   ProvisionedThroughput:
     ReadCapacityUnits: 5
     WriteCapacityUnits: 5
   GlobalSecondaryIndexes:
-  - IndexName: UserId-index
+  - IndexName: userId-index
     KeySchema:
-    - AttributeName: UserId
+    - AttributeName: userId
       KeyType: HASH
     Projection:
       ProjectionType: ALL
